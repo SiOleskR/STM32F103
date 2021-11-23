@@ -173,7 +173,10 @@
 			TIM5EN:1,
 			TIM6EN:1,
 			TIM7EN:1,
-			reserved5:5,
+			TIM12EN:1,
+			TIM13EN:1,
+			TIM14EN:1,
+			reserved5:2,
 			WWDGEN:1,
 			reserved4:2,
 			SPI2EN:1,
@@ -185,7 +188,8 @@
 			UART5EN:1,
 			I2C1EN:1,
 			I2C2EN:1,
-			reserved2:2,
+			USBEN:1,
+			reserved2:1,
 			CAN1EN:1,
 			CAN2EN:1,
 			BKPEN:1,
@@ -263,14 +267,14 @@
 		T_RCC_CFGR2 CFGR2;			//Offset 0x2C Reset value 0x0000 0000
 	};
 	//--------------------------------------------------------------------------------
-	class rcc
+	class Rcc
 	{
 		private:
 			static const unsigned long HSI_RC;
 			unsigned long HSE_RC;
-			RCC_T* RCC_regs;
+			RCC_T* regs;
 		public:
-			rcc();
+			Rcc();
 			void init(unsigned long HSE);
 
 			unsigned long Get_PLL_Clk();
@@ -300,6 +304,7 @@
 			void clockUSART3(state_T state);
 			void clockUART4(state_T state);
 			void clockUART5(state_T state);
+			void clockUSB(state_T state);
 			void resetUSART1();
 			void resetUSART2();
 			void resetUSART3();
@@ -307,6 +312,6 @@
 			void resetUART5();
 	};
 	//----------------------------------------------------------------------------------------------------
-	extern rcc Rcc;
+	extern Rcc rcc;
 	//----------------------------------------------------------------------------------------------------
 #endif

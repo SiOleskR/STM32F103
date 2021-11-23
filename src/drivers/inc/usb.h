@@ -63,7 +63,7 @@
 			reserved2:16;
 	};
 	//----------------------------------------------------------------------------------------------------
-	struct USB_FNR_T	
+	struct USB_FNR_T
 	{
 		volatile unsigned long
 			FN:11,
@@ -130,7 +130,7 @@
 		USB_ISTR_T ISTR;//0x44
 		USB_FNR_T FNR;//0x48
 		USB_DADDR_T DADDR;//0x4C
-		USB_BTABLE_T BTABLE;//0x50				
+		USB_BTABLE_T BTABLE;//0x50
 	};	
 	//----------------------------------------------------------------------------------------------------
 	struct USB_Buffors_T
@@ -142,20 +142,26 @@
 		USB_COUNTn_RX*/
 	};
 	//----------------------------------------------------------------------------------------------------
-	class usb
+	class Usb
 	{
 		private:
-			USB_T* USB_regs;			
+			USB_T* USB_regs;
 			USB_Buffors_T* USB_buffors;
 		public:
-			usb();
+			Usb();
+			USB_ISTR_T get_ISTR();
+			void reset_ISTR();
+
 			void init();
-			void open_HID_mode();
-			void send();
-			void receive();
-			void onReceived();
-			void onSended();
-			void close();
+			void reset();
+
+			//void open_HID_mode();
+			//void send();
+			//void receive();
+			//void onReceived();
+			//void onSended();
+			//void close();
 	};
 	//----------------------------------------------------------------------------------------------------
+	extern Usb usb;
 #endif

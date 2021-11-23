@@ -24,8 +24,7 @@ OBJ_ALL=$(OBJ_SRC) $(OBJ_SRCDRIVERS)
 
 INCLUDE= -I $(INC_DIR) -I $(INC_DRIVERSDIR)
 
-MAP_FILE_OLD= -Map $(OUT_DIR)/program_$(VER).map
-MAP_FILE= -Xlinker -Map=$(OUT_DIR)/program_$(VER).map
+MAP_FILE= -Map $(OUT_DIR)/program_$(VER).map
 
 CPP_FLAGS=-c -fno-common -O0 -g -specs=nosys.specs -mcpu=cortex-m3 -mthumb
 
@@ -35,7 +34,7 @@ ELFS=$(wildcard $(OUT_DIR)/*.elf)
 HEXS=$(wildcard $(OUT_DIR)/*.hex)
 MAPS=$(wildcard $(OUT_DIR)/*.map)
 
-GCC_PATH=E:\Programy\eclipseCpp\ARM_GCC
+GCC_PATH=E:\Programy\ARM_Gcc
 
 CC=$(GCC_PATH)\bin\arm-none-eabi-gcc
 CPP=$(GCC_PATH)\bin\arm-none-eabi-g++
@@ -47,18 +46,20 @@ OD=$(GCC_PATH)\bin\arm-none-eabi-objdump
 SE=$(GCC_PATH)\bin\arm-none-eabi-size
 NU=$(GCC_PATH)\bin\arm-none-eabi-nm
 SF=$(GCC_PATH)\stlink\ST-LINK_CLI
+SC=$(GCC_PATH)\stm32cubeprog\bin\STM32_Programmer_CLI
 RM=$(GCC_PATH)\rm
+THUMB=$(GCC_PATH)\lib\gcc\arm-none-eabi\7.2.1\thumb
 
 .PHONY:$(TARGET)
 
 run:cls clean $(TARGET).hex $(TARGET).asm flush
-
+run_cube:cls clean $(TARGET).hex $(TARGET).asm flush_cube
 rebulid:cls clean $(TARGET).hex $(TARGET).asm
 
 $(TARGET):cls $(TARGET).hex $(TARGET).asm
 	
 $(TARGET).hex:$(OBJ_SRC) $(OBJ_SRCDRIVERS)
-	$(CPP) -Wl,-LE:/Programy/eclipseCpp/ARM_GCC/lib/gcc/arm-none-eabi/7.2.1/thumb $(MEM_MAP) $(MAP_FILE) --specs=nosys.specs $(OUT_DIR)/*.o -o $(OUT_DIR)/program_$(VER).elf	
+	$(CPP) -Wl,-L$(THUMB) $(MEM_MAP) --specs=nosys.specs $(OUT_DIR)/*.o -o $(OUT_DIR)/program_$(VER).elf	
 	$(CP) -O ihex $(OUT_DIR)/program_$(VER).elf $(OUT_DIR)/program_$(VER).hex
 	$(SE) --format=berkeley -d $(OUT_DIR)/program_$(VER).elf
 	
@@ -87,5 +88,6 @@ cls:
 num:
 	$(NU) --numeric-sort $(OUT_DIR)/program_$(VER).elf
 flush:
-	$(SF) -c SWD -ME -p $(OUT_DIR)/program_$(VER).hex -Rst -Run
-	
+	$(SF) -c SWD -ME -p $(OUT_DIR)/program_$(VER).hex -NoPrompt -Rst -Run
+flush_cube:
+	$(SC) -c port=SWD -w $(OUT_DIR)/program_$(VER).hex -Rst -Run

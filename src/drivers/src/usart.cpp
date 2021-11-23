@@ -6,13 +6,13 @@
 #include "utility.h"
 #include "rcc.h"
 //----------------------------------------------------------------------------------------------------
-usart uart1;
+Usart uart1;
 //----------------------------------------------------------------------------------------------------
-usart::usart()
+Usart::Usart()
 {
 }
 //----------------------------------------------------------------------------------------------------
-void usart::init(USART_Address_T device,USART_Speed_T speed)
+void Usart::init(USART_Address_T device,USART_Speed_T speed)
 {
 	//--------------------
 	// Set to memory location
@@ -23,10 +23,10 @@ void usart::init(USART_Address_T device,USART_Speed_T speed)
 	RX_len=0;
 	TX_len=0;
 	Speed=speed;
-	setup(Rcc.Get_Sys_Clk());
+	setup(rcc.Get_Sys_Clk());
 }
 //----------------------------------------------------------------------------------------------------
-void usart::setup(unsigned long fck)
+void Usart::setup(unsigned long fck)
 {
 	//--------------------
 	// wyliczam wartosc rejestru BRR (speed) 12-bit mantissa and 4-bit fraction.
@@ -174,12 +174,12 @@ void USART1_Interrupt()
 
 }
 //----------------------------------------------------------------------------------------------------
-bool usart::get_SR_TXE()
+bool Usart::get_SR_TXE()
 {
 	return USART_regs->SR.TXE==1?true:false;
 }
 //----------------------------------------------------------------------------------------------------
-void usart::write_char()
+void Usart::write_char()
 {
 	if(USART_regs!=(UART_T*)USART_NULL)
 	{
@@ -190,10 +190,10 @@ void usart::write_char()
 	}
 }
 //----------------------------------------------------------------------------------------------------
-void usart::write(string napis)
+void Usart::write(string napis)
 {
 	//--------------------
-	// przepisuje do bufora transmisji tyle znaków ile siê zmieœci
+	// przepisuje do bufora transmisji tyle znakï¿½w ile siï¿½ zmieï¿½ci
 	//--------------------
 	while(*napis!=0x00)
 	{
@@ -204,21 +204,21 @@ void usart::write(string napis)
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
-	// wywo³uje pirwsz¹ transmisjê potem ju¿ poleci przez przerwanie.
+	// wywoï¿½uje pirwszï¿½ transmisjï¿½ potem juï¿½ poleci przez przerwanie.
 	//--------------------
 	start_transmit();
 	//~~~~~~~~~~~~~~~~~~~~
 }
 //----------------------------------------------------------------------------------------------------
-void usart::write(unsigned char *napis)
+void Usart::write(unsigned char *napis)
 {
 	write((string) napis);
 }
 //----------------------------------------------------------------------------------------------------
-void usart::write(unsigned char napis[],int len)
+void Usart::write(unsigned char napis[],int len)
 {
 	//--------------------
-	// przepisuje do bufora transmisji tyle znaków ile siê zmieœci
+	// przepisuje do bufora transmisji tyle znakï¿½w ile siï¿½ zmieï¿½ci
 	//--------------------
 	for(int i=0;i<len;i++)
 		if(TX_len<BUFFOR_SIZE)
@@ -226,14 +226,14 @@ void usart::write(unsigned char napis[],int len)
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
-	// wywo³uje pirwsz¹ transmisjê potem ju¿ poleci przez przerwanie.
+	// wywoï¿½uje pirwszï¿½ transmisjï¿½ potem juï¿½ poleci przez przerwanie.
 	//--------------------
 	start_transmit();
 	//~~~~~~~~~~~~~~~~~~~~
 
 }
 //----------------------------------------------------------------------------------------------------
-unsigned char usart::read()
+unsigned char Usart::read()
 {
 	if(USART_regs!=(UART_T*)USART_NULL)
 		return USART_regs->DR.DR & 0xFF;
@@ -241,10 +241,10 @@ unsigned char usart::read()
 		return 0x00;
 }
 //----------------------------------------------------------------------------------------------------
-void usart::start_transmit()
+void Usart::start_transmit()
 {
 	//--------------------
-	// wywo³uje pirwsz¹ transmisjê potem ju¿ poleci przez przerwanie.
+	// wywoï¿½uje pirwszï¿½ transmisjï¿½ potem juï¿½ poleci przez przerwanie.
 	//--------------------
 	if(TX_len>0)
 	{

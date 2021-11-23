@@ -1,22 +1,22 @@
 #include "rcc.h"
 #include "STM32.h"
 //----------------------------------------------------------------------------------------------------
-rcc Rcc;
+Rcc rcc;
 //----------------------------------------------------------------------------------------------------
 
 //--------------------
 // constants
 //--------------------
-	const unsigned long rcc::HSI_RC=8000000; //default clock
+	const unsigned long Rcc::HSI_RC=8000000; //default clock
 //~~~~~~~~~~~~~~~~~~~~
 
 //----------------------------------------------------------------------------------------------------
-rcc::rcc()
+Rcc::Rcc()
 {
 	//--------------------
-	// Set RCC_Regs to memory RCC location
+	// Set Regs to memory RCC location
 	//--------------------
-		RCC_regs=(RCC_T*)RCC_Address;
+		regs=(RCC_T*)RCC_Address;
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
@@ -26,12 +26,12 @@ rcc::rcc()
 	//~~~~~~~~~~~~~~~~~~~~
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::init(unsigned long HSE)
+void Rcc::init(unsigned long HSE)
 {
 	//--------------------
-	// Set RCC_Regs to memory RCC location
+	// Set Regs to memory RCC location
 	//--------------------
-		RCC_regs=(RCC_T*)RCC_Address;
+		regs=(RCC_T*)RCC_Address;
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
@@ -41,19 +41,19 @@ void rcc::init(unsigned long HSE)
 	//~~~~~~~~~~~~~~~~~~~~
 }
 //----------------------------------------------------------------------------------------------------
-unsigned long rcc::Get_PLL_Clk()
+unsigned long Rcc::Get_PLL_Clk()
 {
 	unsigned long sysclockfreq=0;
 	// zalezy od:
 	// 1: PLL Source Mux (HSI/2) lub (HSE/X) (PLLSRC:)
 	// 2: PLLMul (x2 .. x16) (PLLMUL:)
-	if(RCC_regs->CFGR.PLLSRC==0)
+	if(regs->CFGR.PLLSRC==0)
 	{
 		sysclockfreq=HSI_RC/2;
 	}
 	else
 	{
-		if(RCC_regs->CFGR.PLLXTPRE=1)
+		if(regs->CFGR.PLLXTPRE=1)
 		{
 			sysclockfreq=HSE_RC/2;
 		}
@@ -63,56 +63,55 @@ unsigned long rcc::Get_PLL_Clk()
 		}
 	}
 
-	if(RCC_regs->CFGR.PLLMUL+2<=16)
-		sysclockfreq=(RCC_regs->CFGR.PLLMUL+2)*sysclockfreq;
+	if(regs->CFGR.PLLMUL+2<=16)
+		sysclockfreq=(regs->CFGR.PLLMUL+2)*sysclockfreq;
 	else
 		sysclockfreq=(16)*sysclockfreq;
 
 	return sysclockfreq;
 }
 //----------------------------------------------------------------------------------------------------
-unsigned long rcc::Get_Sys_Clk()
+unsigned long Rcc::Get_Sys_Clk()
 {
 	unsigned long prediv=0, pllclk=0, pllmul=0;
 	unsigned long sysclockfreq=0;
 
-	switch (RCC_regs->CFGR.SWS)
+	switch (regs->CFGR.SWS)
 	{
 		//00: HSI oscillator used as system clock
 		//01: HSE oscillator used as system clock
 		//10: PLL used as system clock
 		//11: not applicable
 
-	    case 0:
-	    {
-	    	// moze byc tylko wewnetrzny oscylator 8MHz
-	    	sysclockfreq=HSI_RC;
-	    	break;
-	    }
-	    case 1:
-	    {
-	    	// moze byc tylko zewnetrzny oscylator 4-16MHz
-	    	sysclockfreq=HSE_RC;
-	    	break;
-	    }
-	    case 2:
-	    {
-	    	sysclockfreq=Get_PLL_Clk();
-	    	break;
-	    }
-	    case 3:
-	    {
-	    	sysclockfreq=HSI_RC;
-	    	break;
-	    }
+		case 0:
+		{
+			// moze byc tylko wewnetrzny oscylator 8MHz
+			sysclockfreq=HSI_RC;
+			break;
+		}
+		case 1:
+		{
+			// moze byc tylko zewnetrzny oscylator 4-16MHz
+			sysclockfreq=HSE_RC;
+			break;
+		}
+		case 2:
+		{
+			sysclockfreq=Get_PLL_Clk();
+			break;
+		}
+		case 3:
+		{
+			sysclockfreq=HSI_RC;
+			break;
+		}
 	}
-
 	return sysclockfreq;
 }
 //----------------------------------------------------------------------------------------------------
-unsigned long rcc::Get_H_Clk()
+unsigned long Rcc::Get_H_Clk()
 {
-	switch(RCC_regs->CFGR.HPRE)
+	switch(regs->CFGR.HPRE)
 	{
 		case 0:
 		case 1:
@@ -151,9 +150,9 @@ unsigned long rcc::Get_H_Clk()
 	}
 }
 //----------------------------------------------------------------------------------------------------
-unsigned long rcc::Get_P_Clk1()
+unsigned long Rcc::Get_P_Clk1()
 {
-	switch(RCC_regs->CFGR.PPRE1)
+	switch(regs->CFGR.PPRE1)
 	{
 		case 0:
 		case 1:
@@ -176,9 +175,9 @@ unsigned long rcc::Get_P_Clk1()
 	}
 }
 //----------------------------------------------------------------------------------------------------
-unsigned long rcc::Get_P_Clk2()
+unsigned long Rcc::Get_P_Clk2()
 {
-	switch(RCC_regs->CFGR.PPRE2)
+	switch(regs->CFGR.PPRE2)
 	{
 		case 0:
 		case 1:
@@ -201,24 +200,24 @@ unsigned long rcc::Get_P_Clk2()
 	}
 }
 //----------------------------------------------------------------------------------------------------
-unsigned long rcc::Get_Cortex_System_Timer_Clk()
+unsigned long Rcc::Get_Cortex_System_Timer_Clk()
 {
 
 }
 //----------------------------------------------------------------------------------------------------
-unsigned long rcc::Get_APB1_Timer_Clk()
+unsigned long Rcc::Get_APB1_Timer_Clk()
 {
 
 }
 //----------------------------------------------------------------------------------------------------
-unsigned long rcc::Get_APB2_Timer_Clk()
+unsigned long Rcc::Get_APB2_Timer_Clk()
 {
 
 }
 //----------------------------------------------------------------------------------------------------
-unsigned long rcc::Get_ADC_Clk()
+unsigned long Rcc::Get_ADC_Clk()
 {
-	switch(RCC_regs->CFGR.ADC_PRE)
+	switch(regs->CFGR.ADC_PRE)
 	{
 		case 0:
 			return Get_P_Clk2()/2;
@@ -236,10 +235,10 @@ unsigned long rcc::Get_ADC_Clk()
 
 }
 //----------------------------------------------------------------------------------------------------
-unsigned long rcc::Get_USB_Clk()
+unsigned long Rcc::Get_USB_Clk()
 {
 	unsigned long tmp=Get_PLL_Clk()*1.5f;
-	switch(RCC_regs->CFGR.OTGFSPRE)
+	switch(regs->CFGR.OTGFSPRE)
 	{
 		case 0:
 				//spraedzicz to 8000*1.1;
@@ -251,113 +250,118 @@ unsigned long rcc::Get_USB_Clk()
 	}
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::clockPortA(state_T state)
+void Rcc::clockPortA(state_T state)
 {
-	RCC_regs->APB2ENR.IOPAEN=state;
+	regs->APB2ENR.IOPAEN=state;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::clockPortB(state_T state)
+void Rcc::clockPortB(state_T state)
 {
-	RCC_regs->APB2ENR.IOPBEN=state;
+	regs->APB2ENR.IOPBEN=state;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::clockPortC(state_T state)
+void Rcc::clockPortC(state_T state)
 {
-	RCC_regs->APB2ENR.IOPCEN=state;
+	regs->APB2ENR.IOPCEN=state;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::clockPortD(state_T state)
+void Rcc::clockPortD(state_T state)
 {
-	RCC_regs->APB2ENR.IOPDEN=state;
+	regs->APB2ENR.IOPDEN=state;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::clockPortE(state_T state)
+void Rcc::clockPortE(state_T state)
 {
-	RCC_regs->APB2ENR.IOPEEN=state;
+	regs->APB2ENR.IOPEEN=state;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::resetPortA()
+void Rcc::resetPortA()
 {
-	RCC_regs->APB2RSTR.IOPARST=1;
-	RCC_regs->APB2RSTR.IOPARST=0;
+	regs->APB2RSTR.IOPARST=1;
+	regs->APB2RSTR.IOPARST=0;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::resetPortB()
+void Rcc::resetPortB()
 {
-	RCC_regs->APB2RSTR.IOPBRST=1;
-	RCC_regs->APB2RSTR.IOPBRST=0;
+	regs->APB2RSTR.IOPBRST=1;
+	regs->APB2RSTR.IOPBRST=0;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::resetPortC()
+void Rcc::resetPortC()
 {
-	RCC_regs->APB2RSTR.IOPCRST=1;
-	RCC_regs->APB2RSTR.IOPCRST=0;
+	regs->APB2RSTR.IOPCRST=1;
+	regs->APB2RSTR.IOPCRST=0;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::resetPortD()
+void Rcc::resetPortD()
 {
-	RCC_regs->APB2RSTR.IOPDRST=1;
-	RCC_regs->APB2RSTR.IOPDRST=0;
+	regs->APB2RSTR.IOPDRST=1;
+	regs->APB2RSTR.IOPDRST=0;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::resetPortE()
+void Rcc::resetPortE()
 {
-	RCC_regs->APB2RSTR.IOPERST=1;
-	RCC_regs->APB2RSTR.IOPERST=0;
+	regs->APB2RSTR.IOPERST=1;
+	regs->APB2RSTR.IOPERST=0;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::clockUSART1(state_T state)
+void Rcc::clockUSART1(state_T state)
 {
-	RCC_regs->APB2ENR.USART1EN=state;
+	regs->APB2ENR.USART1EN=state;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::clockUSART2(state_T state)
+void Rcc::clockUSART2(state_T state)
 {
-	RCC_regs->APB1ENR.USART2EN=state;
+	regs->APB1ENR.USART2EN=state;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::clockUSART3(state_T state)
+void Rcc::clockUSART3(state_T state)
 {
-	RCC_regs->APB1ENR.USART3EN=state;
+	regs->APB1ENR.USART3EN=state;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::clockUART4(state_T state)
+void Rcc::clockUART4(state_T state)
 {
-	RCC_regs->APB1ENR.UART4EN=state;
+	regs->APB1ENR.UART4EN=state;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::clockUART5(state_T state)
+void Rcc::clockUART5(state_T state)
 {
-	RCC_regs->APB1ENR.UART5EN=state;
+	regs->APB1ENR.UART5EN=state;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::resetUSART1()
+void Rcc::clockUSB(state_T state)
 {
-	RCC_regs->APB2RSTR.USART1RST=1;
-	RCC_regs->APB2RSTR.USART1RST=0;
+	regs->APB1ENR.USBEN = state;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::resetUSART2()
+void Rcc::resetUSART1()
 {
-	RCC_regs->APB1RSTR.USART2RST=1;
-	RCC_regs->APB1RSTR.USART2RST=0;
+	regs->APB2RSTR.USART1RST=1;
+	regs->APB2RSTR.USART1RST=0;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::resetUSART3()
+void Rcc::resetUSART2()
 {
-	RCC_regs->APB1RSTR.USART3RST=1;
-	RCC_regs->APB1RSTR.USART3RST=0;
+	regs->APB1RSTR.USART2RST=1;
+	regs->APB1RSTR.USART2RST=0;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::resetUART4()
+void Rcc::resetUSART3()
 {
-	RCC_regs->APB1RSTR.UART4RST=1;
-	RCC_regs->APB1RSTR.UART4RST=0;
+	regs->APB1RSTR.USART3RST=1;
+	regs->APB1RSTR.USART3RST=0;
 }
 //----------------------------------------------------------------------------------------------------
-void rcc::resetUART5()
+void Rcc::resetUART4()
 {
-	RCC_regs->APB1RSTR.UART5RST=1;
-	RCC_regs->APB1RSTR.UART5RST=0;
+	regs->APB1RSTR.UART4RST=1;
+	regs->APB1RSTR.UART4RST=0;
+}
+//----------------------------------------------------------------------------------------------------
+void Rcc::resetUART5()
+{
+	regs->APB1RSTR.UART5RST=1;
+	regs->APB1RSTR.UART5RST=0;
 }
 //----------------------------------------------------------------------------------------------------

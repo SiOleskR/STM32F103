@@ -8,42 +8,50 @@
 #include "crc.h"
 #include "usart.h"
 #include "utility.h"
-#include "interrupt.h"
+#include "exti.h"
+#include "nvic.h"
+#include "usb.h"
 //----------------------------------------------------------------------------------------------------
 int main(void)
 {
 	//--------------------
 	// First must be configure clock
 	//--------------------
-		Rcc.init(8000000);
-		Rcc.clockPortA(enable);
-		Rcc.clockUSART1(enable);
+	rcc.init(8000000);
+	rcc.clockPortA(enable);
+	rcc.clockUSART1(enable);
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
 	// inicjalizacjia systick
 	//--------------------
-		SysTick.init();
-		SysTick.set();
+	SysTick.init();
+	SysTick.set();
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
 	// inicjalizacjia crc
 	//--------------------
-		Crc.init();
+	Crc.init();
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
 	// inicjalizacjia uart1
 	//--------------------
-		uart1.init(USART1_Address,USART_9600);
+	uart1.init(USART1_Address,USART_9600);
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
 	// inicjalizacjia GPIO
 	//--------------------
-		gpio LedGreenPin(GPIO_Port_A,GPIO_PIN_8,GPIO_Output_PushPull_2MHz_Mode);
-		gpio LedRedPin(GPIO_Port_A,GPIO_PIN_11,GPIO_Output_PushPull_2MHz_Mode);
+	gpio LedGreenPin(GPIO_Port_A,GPIO_PIN_8,GPIO_Output_PushPull_2MHz_Mode);
+	gpio LedRedPin(GPIO_Port_A,GPIO_PIN_11,GPIO_Output_PushPull_2MHz_Mode);
+	//~~~~~~~~~~~~~~~~~~~~
+
+	//--------------------
+	// inicjalizacjia USB -> HID
+	//--------------------
+	usb.init();
 	//~~~~~~~~~~~~~~~~~~~~
 
 	LedGreenPin.set();

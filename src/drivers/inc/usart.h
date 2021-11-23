@@ -138,7 +138,7 @@
 		USART_GTPR_T GTPR;
 	};
 	//----------------------------------------------------------------------------------------------------
-	class usart
+	class Usart
 	{
 		private:
 			UART_T* USART_regs;
@@ -152,7 +152,7 @@
 			void setup(unsigned long fck);
 			void start_transmit();
 		public:
-			usart();
+			Usart();
 			void init(USART_Address_T device,USART_Speed_T speed);
 			void write_char();
 			bool get_SR_TXE();
@@ -167,5 +167,5 @@
 		//USART1 remapping - table 54 - AF remap 0: No remap (TX/PA9, RX/PA10) 1: Remap (TX/PB6, RX/PB7)
 		//USART1 - interrupt 0x0000_00D4
 
-	extern usart uart1;
+	extern Usart uart1;
 #endif
