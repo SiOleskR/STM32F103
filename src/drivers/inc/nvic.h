@@ -223,8 +223,12 @@
 		Nvic();
 		void init();
 
-		void set_priority(unsigned char position, unsigned long priority);
-		void set_enable(unsigned char position, unsigned long interrup);
+		void set_priority(IRQ_Position_Table interrupt, IRQ_Priority priority);
+		void set_enable(IRQ_Position_Table interrupt);
+		void clear_enable(IRQ_Position_Table interrupt);
+		void set_pending(IRQ_Position_Table interrupt);
+		void clear_pending(IRQ_Position_Table interrupt);
+		bool is_active(IRQ_Position_Table interrupt)
 	};
 	//----------------------------------------------------------------------------------------------------
 	extern Nvic nvic;

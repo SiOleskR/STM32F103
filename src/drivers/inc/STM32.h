@@ -1,6 +1,8 @@
 #ifndef STM32_H
 	#define STM32_H	
 	//------------------------------------------------------------------------
+	#include "STM32F103C8T.h"
+	//------------------------------------------------------------------------
 	#define FLASH_Address 	0x08000000
 	#define RAM_Address   	0x20000000
 	#define DEVICES_Address	0x40000000
@@ -56,6 +58,27 @@
 	#define PIN_13		14
 	#define PIN_14		15
 	#define PIN_15 		16
+	//----------------------------------------------------------------------------------------------------
+	typedef enum
+	{
+		https://interrupt.memfault.com/blog/arm-cortex-m-exceptions-and-nvic
+		IRQ_P0 = 0,
+		IRQ_P1 = 16,
+		IRQ_P2 = 32,
+		IRQ_P3 = 48,
+		IRQ_P4 = 64,
+		IRQ_P5 = 80,
+		IRQ_P6 = 96,
+		IRQ_P7 = 112,
+		IRQ_P8 = 128,
+		IRQ_P9 = 144,
+		IRQ_P10 = 160,
+		IRQ_P11 = 176,
+		IRQ_P12 = 192,
+		IRQ_P13 = 208,
+		IRQ_P14 = 224,
+		IRQ_P15 = 240;
+	} IRQ_Priority;
 	//----------------------------------------------------------------------------------------------------
 	typedef void (*functionPointer_T)(void);
 	typedef unsigned int* memPointer_T;

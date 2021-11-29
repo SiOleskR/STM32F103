@@ -21,13 +21,33 @@ void Nvic::init()
 	//~~~~~~~~~~~~~~~~~~~~
 }
 //----------------------------------------------------------------------------------------------------
-void Nvic::set_priority(unsigned char position, unsigned long priority)
+void Nvic::set_priority(IRQ_Position_Table interrupt, IRQ_Priority priority)
 {
 	regs->IPR[position] = priority;
 }
 //----------------------------------------------------------------------------------------------------
-void Nvic::set_enable(unsigned char position, unsigned long interrup) 
+void Nvic::set_enable(IRQ_Position_Table interrupt)
 {
-	regs->ISER[position] |= (1 << interrup);
+	regs->ISER[ (interrupt / 32) ] |= (1 << (interrupt % 32));
+}
+//----------------------------------------------------------------------------------------------------
+void Nvic::clear_enable(IRQ_Position_Table interrupt)
+{
+	regs->ICER[ (interrupt / 32) ] |= (1 << (interrupt % 32));
+}
+//----------------------------------------------------------------------------------------------------
+void Nvic::set_pending(IRQ_Position_Table interrupt)
+{
+	regs->ISPR[ (interrupt / 32) ] |= (1 << (interrupt % 32));
+}
+//----------------------------------------------------------------------------------------------------
+void Nvic::clear_pending(IRQ_Position_Table interrupt)
+{
+	regs->ICPR[ (interrupt / 32) ] |= (1 << (interrupt % 32));
+}
+//----------------------------------------------------------------------------------------------------
+bool is_active(IRQ_Position_Table interrupt)
+{
+	return ( regs->IABR[(interrupt / 32)] & (1 << (interrupt % 32)) ) == (1 << (interrupt % 32));
 }
 //----------------------------------------------------------------------------------------------------
