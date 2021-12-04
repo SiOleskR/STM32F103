@@ -57,11 +57,12 @@
 	#define PIN_12		13
 	#define PIN_13		14
 	#define PIN_14		15
-	#define PIN_15 		16
+	#define PIN_15		16
+	//----------------------------------------------------------------------------------------------------
+	// https://interrupt.memfault.com/blog/arm-cortex-m-exceptions-and-nvic
 	//----------------------------------------------------------------------------------------------------
 	typedef enum
 	{
-		https://interrupt.memfault.com/blog/arm-cortex-m-exceptions-and-nvic
 		IRQ_P0 = 0,
 		IRQ_P1 = 16,
 		IRQ_P2 = 32,
@@ -77,7 +78,7 @@
 		IRQ_P12 = 192,
 		IRQ_P13 = 208,
 		IRQ_P14 = 224,
-		IRQ_P15 = 240;
+		IRQ_P15 = 240
 	} IRQ_Priority;
 	//----------------------------------------------------------------------------------------------------
 	typedef void (*functionPointer_T)(void);

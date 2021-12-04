@@ -1,6 +1,7 @@
 #include "usb.h"
 #include "STM32.h"
 #include "rcc.h"
+#include "main.h"
 //----------------------------------------------------------------------------------------------------
 Usb usb;
 //----------------------------------------------------------------------------------------------------
@@ -30,8 +31,8 @@ void Usb::init()
 	//--------------------
 	// Set to memory location
 	//--------------------
-	USB_regs=(USB_T*)0x40005C00;
-	USB_buffors=(USB_Buffors_T*)0x40006000;
+	USB_regs = (USB_T*) 0x40005C00;
+	USB_buffors = (USB_Buffors_T*) 0x40006000;
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
@@ -43,7 +44,7 @@ void Usb::init()
 	//--------------------
 	// Enable USB Interrupts
 	//--------------------
-	nvic.set_priority(5, 0x00000010);
+	//nvic.set_priority(5, 0x00000010);
 //  NVIC->ISER[0] |= (1 << (USB_LP_CAN_RX0_IRQChannel & 0x1F));
 	//~~~~~~~~~~~~~~~~~~~~
 }
@@ -85,6 +86,7 @@ void Usb::reset()
 //----------------------------------------------------------------------------------------------------
 void USB_LP_CAN_RX0_Interrupt(void)
 {
+	LedRedPin.toggle();
 	if (usb.get_ISTR().RESET)
 	{
 		usb.reset();

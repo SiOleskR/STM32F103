@@ -228,7 +228,7 @@
 		void clear_enable(IRQ_Position_Table interrupt);
 		void set_pending(IRQ_Position_Table interrupt);
 		void clear_pending(IRQ_Position_Table interrupt);
-		bool is_active(IRQ_Position_Table interrupt)
+		bool is_active(IRQ_Position_Table interrupt);
 	};
 	//----------------------------------------------------------------------------------------------------
 	extern Nvic nvic;

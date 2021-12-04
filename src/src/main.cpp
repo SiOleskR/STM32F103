@@ -12,6 +12,8 @@
 #include "nvic.h"
 #include "usb.h"
 //----------------------------------------------------------------------------------------------------
+gpio LedRedPin(GPIO_Port_A,GPIO_PIN_11,GPIO_Output_PushPull_2MHz_Mode);
+//----------------------------------------------------------------------------------------------------
 int main(void)
 {
 	//--------------------
@@ -45,7 +47,6 @@ int main(void)
 	// inicjalizacjia GPIO
 	//--------------------
 	gpio LedGreenPin(GPIO_Port_A,GPIO_PIN_8,GPIO_Output_PushPull_2MHz_Mode);
-	gpio LedRedPin(GPIO_Port_A,GPIO_PIN_11,GPIO_Output_PushPull_2MHz_Mode);
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
@@ -56,27 +57,24 @@ int main(void)
 
 	LedGreenPin.set();
 	LedRedPin.set();
+	long speed = 1000;
 
 	while(1)
 	{
-		int speed=500;
-		string napis={"rafal"};
-		unsigned char napis2[]={'R','A','F','A','L',0x00};
-
-		SysTick.delay(speed);
-		LedGreenPin.reset();
-		LedRedPin.set();
-		SysTick.delay(speed);
-		LedGreenPin.set();
-		LedRedPin.reset();
-		SysTick.delay(speed);
-		LedGreenPin.reset();
-		LedRedPin.reset();
-		SysTick.delay(speed);
-		LedGreenPin.set();
-		LedRedPin.set();
+		if(speed-- <= 0)
+		{
+			speed = 1000000;
+			LedGreenPin.toggle();
+		}
+		
+		//string napis={"rafal"};
+		//unsigned char napis2[]={'R','A','F','A','L',0x00};
+		//SysTick.delay(speed);
+		//LedGreenPin.reset();
+		//LedRedPin.set();
+		
 		//uart1.write(napis,sizeof(napis));
-		uart1.write(napis2);
+		//uart1.write(napis2);
 	}
 }
 

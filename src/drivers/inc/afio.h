@@ -7,11 +7,11 @@
 	//----------------------------------------------------------------------------------------------------
 	typedef enum
 	{
-		AFIO_PORT_A=0,
-		AFIO_PORT_B=1,
-		AFIO_PORT_C=2,
-		AFIO_PORT_D=3,
-		AFIO_PORT_E=4
+		AFIO_PORT_A = 0,
+		AFIO_PORT_B = 1,
+		AFIO_PORT_C = 2,
+		AFIO_PORT_D = 3,
+		AFIO_PORT_E = 4
 	}T_AFIO_PORT;
 	//----------------------------------------------------------------------------------------------------
 	typedef enum
