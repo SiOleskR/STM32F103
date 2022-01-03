@@ -4,6 +4,20 @@
 	#include "STM32.h"
 	//----------------------------------------------------------------------------------------------------
 	#define RCC_Address (DEVICES_Address+0x00021000)
+	#define TIM11EN_bit 0x100000
+	#define TIM10EN_bit 0x80000
+
+	#define AFIOEN_bit	0x01
+	#define IOPAEN_bit	0x04
+	#define IOPBEN_bit	0x08
+	#define IOPCEN_bit	0x10
+	#define IOPDEN_bit	0x20
+	#define IOPEEN_bit	0x40
+	#define ADC1EN_bit	0x200
+	#define ADC2EN_bit	0x400
+	#define TIM1EN_bit	0x800
+	#define SPI1EN_bit	0x1000
+	#define USART1EN_bit	0x4000
 	//----------------------------------------------------------------------------------------------------
 	struct T_RCC_CR
 	{

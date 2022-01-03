@@ -1,0 +1,5 @@
+{
+	"cortex-debug.armToolchainPath": "E:\\Programy\\ARM_Gcc\\bin",
+	"cortex-debug.openocdPath": "E:\\Programy\\openocd\\bin\\openocd.exe",
+	"cortex-debug.variableUseNaturalFormat": true
+}

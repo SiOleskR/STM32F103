@@ -1,6 +1,6 @@
 #include "systick.h"
 //----------------------------------------------------------------------------------------------------
-unsigned long long int SysTicCounter=0;
+unsigned long long int SysTicCounter = 0;
 systick SysTick;
 //----------------------------------------------------------------------------------------------------
 void SysTick_Interrupt(void)
@@ -13,13 +13,13 @@ systick::systick()
 	//--------------------
 	// Set SysTick_Regs to memory location
 	//--------------------
-		systick_regs=(systick_TypeDef*)systick_Address;
+		systick_regs = (systick_TypeDef*) systick_Address;
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
 	// reset SysTickValue
 	//--------------------
-		SysTickCounter=0;
+		SysTickCounter = 0;
 	//~~~~~~~~~~~~~~~~~~~~
 }
 //----------------------------------------------------------------------------------------------------
@@ -28,21 +28,21 @@ void systick::init()
 	//--------------------
 	// Set SysTick_Regs to memory location
 	//--------------------
-		systick_regs=(systick_TypeDef*)systick_Address;
+		systick_regs = (systick_TypeDef*) systick_Address;
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
 	// reset SysTickValue
 	//--------------------
-		SysTickCounter=0;
+		SysTickCounter = 0;
 	//~~~~~~~~~~~~~~~~~~~~
 }
 //----------------------------------------------------------------------------------------------------
 void systick::set()
 {
-	systick_regs->STCSR=7;
-	systick_regs->STRVR=8000;//1125;
-	systick_regs->STCVR=0;
+	systick_regs->STCSR = 7;
+	systick_regs->STRVR = 8000;//1125;
+	systick_regs->STCVR = 0;
 }
 //----------------------------------------------------------------------------------------------------
 void systick::inc()
@@ -52,7 +52,7 @@ void systick::inc()
 //----------------------------------------------------------------------------------------------------
 void systick::delay(int ms)
 {
-	unsigned long long int tmp=SysTickCounter;
-	while((tmp+ms)>SysTickCounter);
+	unsigned long long int tmp = SysTickCounter;
+	while( (tmp + ms) > SysTickCounter ){};
 }
 //----------------------------------------------------------------------------------------------------

@@ -12,15 +12,17 @@
 #include "nvic.h"
 #include "usb.h"
 //----------------------------------------------------------------------------------------------------
-gpio LedRedPin(GPIO_Port_A,GPIO_PIN_11,GPIO_Output_PushPull_2MHz_Mode);
+gpio LedRedPin;
+gpio LedGreenPin;
+gpio LedUserPin;
 //----------------------------------------------------------------------------------------------------
-int main(void)
-{
+int main(void) {
 	//--------------------
 	// First must be configure clock
 	//--------------------
 	rcc.init(8000000);
 	rcc.clockPortA(enable);
+	rcc.clockPortC(enable);
 	rcc.clockUSART1(enable);
 	//~~~~~~~~~~~~~~~~~~~~
 
@@ -29,6 +31,12 @@ int main(void)
 	//--------------------
 	SysTick.init();
 	SysTick.set();
+	//~~~~~~~~~~~~~~~~~~~~
+
+	//--------------------
+	// inicjalizacjia nvic
+	//--------------------
+	nvic.init();
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
@@ -46,7 +54,9 @@ int main(void)
 	//--------------------
 	// inicjalizacjia GPIO
 	//--------------------
-	gpio LedGreenPin(GPIO_Port_A,GPIO_PIN_8,GPIO_Output_PushPull_2MHz_Mode);
+	LedGreenPin.init(GPIO_Port_A, GPIO_PIN_8, GPIO_Output_PushPull_2MHz_Mode, true);
+	LedRedPin.init(GPIO_Port_C, GPIO_PIN_15, GPIO_Output_PushPull_2MHz_Mode, true);
+	LedUserPin.init(GPIO_Port_C, GPIO_PIN_13, GPIO_Output_PushPull_2MHz_Mode, true);
 	//~~~~~~~~~~~~~~~~~~~~
 
 	//--------------------
@@ -54,27 +64,16 @@ int main(void)
 	//--------------------
 	usb.init();
 	//~~~~~~~~~~~~~~~~~~~~
-
-	LedGreenPin.set();
-	LedRedPin.set();
-	long speed = 1000;
-
-	while(1)
-	{
-		if(speed-- <= 0)
-		{
-			speed = 1000000;
-			LedGreenPin.toggle();
+	
+	long mig = 1000000;
+	while (true) {
+		if ( mig == 10000) {
+			LedUserPin.reset();
 		}
-		
-		//string napis={"rafal"};
-		//unsigned char napis2[]={'R','A','F','A','L',0x00};
-		//SysTick.delay(speed);
-		//LedGreenPin.reset();
-		//LedRedPin.set();
-		
-		//uart1.write(napis,sizeof(napis));
-		//uart1.write(napis2);
+		if ( --mig == 0) {
+			mig = 1000000;
+			LedUserPin.set();
+		}
 	}
 }
 

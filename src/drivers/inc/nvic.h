@@ -9,8 +9,8 @@
 	//----------------------------------------------------------------------------------------------------
 	struct NVIC_ISERx_S
 	{
-		volatile unsigned long
-		RS0:1,
+		volatile unsigned long r;
+		/*RS0:1,
 		RS1:1,
 		RS2:1,
 		RS3:1,
@@ -41,12 +41,12 @@
 		RS28:1,
 		RS29:1,
 		RS30:1,
-		RS31:1;
+		RS31:1;*/
 	};
 	//----------------------------------------------------------------------------------------------------
 	struct NVIC_ICERx_S
 	{
-		volatile unsigned long
+		volatile unsigned long 
 		RC_W0:1,
 		RC_W1:1,
 		RC_W2:1,

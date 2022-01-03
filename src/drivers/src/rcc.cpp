@@ -252,82 +252,82 @@ unsigned long Rcc::Get_USB_Clk()
 //----------------------------------------------------------------------------------------------------
 void Rcc::clockPortA(state_T state)
 {
-	regs->APB2ENR.IOPAEN=state;
+	regs->APB2ENR.IOPAEN = state;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::clockPortB(state_T state)
 {
-	regs->APB2ENR.IOPBEN=state;
+	regs->APB2ENR.IOPBEN = state;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::clockPortC(state_T state)
 {
-	regs->APB2ENR.IOPCEN=state;
+	regs->APB2ENR.IOPCEN = state;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::clockPortD(state_T state)
 {
-	regs->APB2ENR.IOPDEN=state;
+	regs->APB2ENR.IOPDEN = state;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::clockPortE(state_T state)
 {
-	regs->APB2ENR.IOPEEN=state;
+	regs->APB2ENR.IOPEEN = state;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::resetPortA()
 {
-	regs->APB2RSTR.IOPARST=1;
-	regs->APB2RSTR.IOPARST=0;
+	regs->APB2RSTR.IOPARST = 1;
+	regs->APB2RSTR.IOPARST = 0;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::resetPortB()
 {
-	regs->APB2RSTR.IOPBRST=1;
-	regs->APB2RSTR.IOPBRST=0;
+	regs->APB2RSTR.IOPBRST = 1;
+	regs->APB2RSTR.IOPBRST = 0;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::resetPortC()
 {
-	regs->APB2RSTR.IOPCRST=1;
-	regs->APB2RSTR.IOPCRST=0;
+	regs->APB2RSTR.IOPCRST = 1;
+	regs->APB2RSTR.IOPCRST = 0;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::resetPortD()
 {
-	regs->APB2RSTR.IOPDRST=1;
-	regs->APB2RSTR.IOPDRST=0;
+	regs->APB2RSTR.IOPDRST = 1;
+	regs->APB2RSTR.IOPDRST = 0;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::resetPortE()
 {
-	regs->APB2RSTR.IOPERST=1;
-	regs->APB2RSTR.IOPERST=0;
+	regs->APB2RSTR.IOPERST = 1;
+	regs->APB2RSTR.IOPERST = 0;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::clockUSART1(state_T state)
 {
-	regs->APB2ENR.USART1EN=state;
+	regs->APB2ENR.USART1EN = state;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::clockUSART2(state_T state)
 {
-	regs->APB1ENR.USART2EN=state;
+	regs->APB1ENR.USART2EN = state;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::clockUSART3(state_T state)
 {
-	regs->APB1ENR.USART3EN=state;
+	regs->APB1ENR.USART3EN = state;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::clockUART4(state_T state)
 {
-	regs->APB1ENR.UART4EN=state;
+	regs->APB1ENR.UART4EN = state;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::clockUART5(state_T state)
 {
-	regs->APB1ENR.UART5EN=state;
+	regs->APB1ENR.UART5EN = state;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::clockUSB(state_T state)
@@ -337,31 +337,31 @@ void Rcc::clockUSB(state_T state)
 //----------------------------------------------------------------------------------------------------
 void Rcc::resetUSART1()
 {
-	regs->APB2RSTR.USART1RST=1;
-	regs->APB2RSTR.USART1RST=0;
+	regs->APB2RSTR.USART1RST = 1;
+	regs->APB2RSTR.USART1RST = 0;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::resetUSART2()
 {
-	regs->APB1RSTR.USART2RST=1;
-	regs->APB1RSTR.USART2RST=0;
+	regs->APB1RSTR.USART2RST = 1;
+	regs->APB1RSTR.USART2RST = 0;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::resetUSART3()
 {
-	regs->APB1RSTR.USART3RST=1;
-	regs->APB1RSTR.USART3RST=0;
+	regs->APB1RSTR.USART3RST = 1;
+	regs->APB1RSTR.USART3RST = 0;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::resetUART4()
 {
-	regs->APB1RSTR.UART4RST=1;
-	regs->APB1RSTR.UART4RST=0;
+	regs->APB1RSTR.UART4RST = 1;
+	regs->APB1RSTR.UART4RST = 0;
 }
 //----------------------------------------------------------------------------------------------------
 void Rcc::resetUART5()
 {
-	regs->APB1RSTR.UART5RST=1;
-	regs->APB1RSTR.UART5RST=0;
+	regs->APB1RSTR.UART5RST = 1;
+	regs->APB1RSTR.UART5RST = 0;
 }
 //----------------------------------------------------------------------------------------------------

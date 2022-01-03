@@ -54,7 +54,9 @@ THUMB=$(GCC_PATH)\lib\gcc\arm-none-eabi\7.2.1\thumb
 
 run:cls clean $(TARGET).hex $(TARGET).asm flush
 run_cube:cls clean $(TARGET).hex $(TARGET).asm flush_cube
-rebulid:cls clean $(TARGET).hex $(TARGET).asm
+#rebulid:cls clean $(TARGET).hex $(TARGET).asm
+rebulid:cls clean $(TARGET).hex
+rebulid_dbg:cls clean g_$(TARGET).hex
 
 $(TARGET):cls $(TARGET).hex $(TARGET).asm
 	
@@ -62,27 +64,32 @@ $(TARGET).hex:$(OBJ_SRC) $(OBJ_SRCDRIVERS)
 	$(CPP) -Wl,-L$(THUMB) $(MEM_MAP) --specs=nosys.specs $(OUT_DIR)/*.o -o $(OUT_DIR)/program_$(VER).elf	
 	$(CP) -O ihex $(OUT_DIR)/program_$(VER).elf $(OUT_DIR)/program_$(VER).hex
 	$(SE) --format=berkeley -d $(OUT_DIR)/program_$(VER).elf
-	
+
+g_$(TARGET).hex:$(OBJ_SRC) $(OBJ_SRCDRIVERS)
+	$(CPP) -g -Wl,-L$(THUMB) $(MEM_MAP) --specs=nosys.specs $(OUT_DIR)/*.o -o $(OUT_DIR)/program_$(VER).elf	
+	$(CP) -O ihex $(OUT_DIR)/program_$(VER).elf $(OUT_DIR)/program_$(VER).hex
+	$(SE) --format=berkeley -d $(OUT_DIR)/program_$(VER).elf
+
 $(TARGET).asm:$(OBJ_SRC_ASM) $(OBJ_SRCDRIVERS_ASM)
 
 $(OUT_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CPP) $(CPP_FLAGS) $(MEM_MAP) $(INCLUDE) -o $@ $<   
+	$(CPP) $(CPP_FLAGS) $(MEM_MAP) $(INCLUDE) -o $@ $<
 	
 $(OUT_DIR)/%.o: $(SRC_DRIVERSDIR)/%.cpp
 	$(CPP) $(CPP_FLAGS) $(MEM_MAP) $(INCLUDE) -o $@ $< 
 	
 $(OUT_DIR)/%.s: $(SRC_DIR)/%.cpp
-	$(CPP) $(CPP_FLAGS) $(MEM_MAP) $(INCLUDE) -S -o $@ $<   
+	$(CPP) $(CPP_FLAGS) $(MEM_MAP) $(INCLUDE) -S -o $@ $<
 	
 $(OUT_DIR)/%.s: $(SRC_DRIVERSDIR)/%.cpp
 	$(CPP) $(CPP_FLAGS) $(MEM_MAP) $(INCLUDE) -S -o $@ $< 
    
-clean:cls	
+clean:cls
 	$(RM) -f $(OBJECTS)
 	$(RM) -f $(ASEMS)
 	$(RM) -f $(ELFS)
 	$(RM) -f $(HEXS)
-	$(RM) -f $(MAPS)	
+	$(RM) -f $(MAPS)
 cls:
 	cls
 num:

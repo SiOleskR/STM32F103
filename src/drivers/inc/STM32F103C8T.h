@@ -6,6 +6,15 @@
 	//------------------------------------------------------------------------
 	typedef enum
 	{
+		IRQ_NonMaskableInt = -14,
+		IRQ_HardFault = -13,
+		IRQ_MemoryManagement = -12,
+		IRQ_BusFault = -11,
+		IRQ_UsageFault = -10,
+		IRQ_SVCall = -5,
+		IRQ_DebugMonitor = -4,
+		IRQ_PendSV = -2,
+		IRQ_SysTick = -1,
 		IRQ_WWDG = 0,
 		IRQ_PVD = 1,
 		IRQ_TAMPER = 2,
